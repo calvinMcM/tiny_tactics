@@ -3,7 +3,7 @@ import {createReducer} from '@reduxjs/toolkit'
 import { Stats } from '../structs/Stats'
 import { Unit } from '../structs/Unit'
 import { addUnit } from './Actions'
-import { State } from './State'
+import { defaultState, State } from './State'
 
 
 export default createReducer<State>(defaultState, builder => {
