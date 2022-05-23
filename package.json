@@ -8,6 +8,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@reduxjs/toolkit": "^1.8.1",
     "phaser": "^3.55.2",
     "simplex-noise": "^3.0.1"
   },

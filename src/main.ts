@@ -9,7 +9,7 @@ class Example extends Phaser.Scene {
     }
 
     create() {
-        this.cameras.main.zoom = 1.5
+        this.cameras.main.zoom = 1.5;
 
         var terrain = this.add.group();
 
@@ -56,13 +56,13 @@ class Example extends Phaser.Scene {
         for (let y = 0; y < field.length; y++) {
             for (let x = 0; x < field[y].length; x++) {
                 let z = field[y][x];
-                const s = this._createTile(x, y, z)
-                terrain.add(s);
+                const s = this._createTile(x, y, z);
+                s.forEach(sprite => terrain.add(sprite));
 
                 const chPos = spriteLocale.find((sl) => sl.x === x && sl.y == y);
                 if (chPos) {
-                    const ch = this._createUnit(x, y, z)
-                    sprites.add(ch);
+                    const ch = this._createUnit(x, y, z);
+                    ch.forEach(s => sprites.add(s));
                 }
             }
         }
@@ -73,7 +73,7 @@ class Example extends Phaser.Scene {
         sprites.incY(14 * 14);
     }
 
-    _createTile(x: number, y: number, z: number){
+    _createTile(x: number, y: number, z: number): Phaser.GameObjects.Sprite[] {
         let tileSprite = 1;
         if (z == 3) {
             tileSprite = 0;
@@ -84,11 +84,15 @@ class Example extends Phaser.Scene {
         }
 
         const { x: _x, y: _y } = isoTransform(x, -y, z);
+        const u = this.add.sprite(_x, _y + 20, "tiles", tileSprite == 2 ? 2 : 3);
         const s = this.add.sprite(_x, _y, "tiles", tileSprite);
-        return s
+        return [s, u];
     }
 
-    _createUnit(x: number, y: number, z: number){
+    _createUnit(x: number, y: number, z: number) {
+        if (z > 2) {
+            z = 3;
+        }
         const { x: _x, y: _y } = isoTransform(x, -y, z);
         const ch = this.add.sprite(_x, _y - 25, "person", 1);
         ch.setDataEnabled();
@@ -108,7 +112,8 @@ class Example extends Phaser.Scene {
                 ch.play("downWalk");
                 break;
         }
-        return ch;
+
+        return [ch];
     }
 }
 
