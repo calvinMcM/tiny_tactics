@@ -5,7 +5,7 @@ import { Token } from "./Token";
 
 export class Unit{
     constructor(
-        public readonly id: number,
+        public readonly id: string,
         public readonly name: string,
         public readonly stats: Stats,
         public readonly tokens: Token[],
